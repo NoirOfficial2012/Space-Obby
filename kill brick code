@@ -1,8 +1,17 @@
-function onTouch(part)
-local humanoid = part.Parent:findFirstChild("Humanoid")
-if (humanoid ~=nil) then
-humanoid.Health = 0
-end
+local part = script.Parent
+local isTouched = false
+
+local function onTouch(otherPart)
+	local character = otherPart.Parent
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	if humanoid and not isTouched then
+		isTouched = true -- Lock the script
+		
+		humanoid.Health = 0 -- Instantly kills the character
+		
+		task.wait(1)
+		isTouched = false
+	end
 end
 
-script.Parent.Touched:connect(onTouch)
+part.Touched:Connect(onTouch)
